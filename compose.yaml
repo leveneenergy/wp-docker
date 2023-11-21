@@ -1,0 +1,65 @@
+services:
+  mysql:
+    # We use a mariadb image which supports both amd64 & arm64 architecture
+    container_name: ${APP_NAME}.mysql
+    image: mariadb:latest
+    # If you really want to use MySQL, uncomment the following line
+    #image: mysql:8.0.27
+    command: '--default-authentication-plugin=mysql_native_password'
+    healthcheck:
+      test: mysqladmin -uwp_user -pwp_pass ping -h 127.0.0.1
+    volumes:
+      - database:/var/lib/mysql
+      - ${PWD}/data:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+    ports:
+      - 3306:3306
+
+  wordpress:
+    # image: wordpress:latest
+    container_name: ${APP_NAME}.wp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress:/var/www/html
+       - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
+    ports:
+      - 80:80
+    depends_on:
+      - mysql
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST=${DB_HOST}
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    platform: linux/amd64
+    container_name: ${APP_NAME}.phpmyadmin
+    volumes:
+      - ./config/phpmyadmin.ini:/usr/local/etc/php/conf.d/phpmyadmin.ini
+    environment:
+      PMA_HOST: "${DB_HOST}"
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+    ports:
+      - 8082:80
+    links:
+      - mysql:mysql
+
+volumes:
+  database:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./src
