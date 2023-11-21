@@ -1,5 +1,11 @@
 FROM wordpress:latest
 
+# Install xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+# Install Less for WP-CLI
+RUN apt-get update && apt-get -y install less
+
 # Install wp-cli
 RUN apt-get update && apt-get install -y sudo less mariadb-client
 RUN curl -o /bin/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

@@ -29,3 +29,10 @@ data/*
 # exceptions
 !*/plugins/*-simple-cookie-banner
 !*/plugins/*-simple-GTM-plugin
+
+src/*
+src/wp-admin/*
+src/wp-includes/*
+src/wp-*.php
+!src/wp-config.php
+*/.htaccess
