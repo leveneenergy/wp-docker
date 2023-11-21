@@ -4,6 +4,9 @@ Wordpress development using docker and github
 ### Run
 
 Clone the repository and run the following commands
+
+rename `.env.sample` to `.env`
+
 ```sh
 # make data directory
 mkdir data
