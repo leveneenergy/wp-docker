@@ -5,9 +5,9 @@
 node_modules
 vendor
 
-dump/*
-!dump/.gitkeep 
-!dump/update_db_siteurl_home.sh
+data/*
+!data/.gitkeep 
+!data/update_db_siteurl_home.sh
 
 */themes/twenty*
 */themes/index.php
