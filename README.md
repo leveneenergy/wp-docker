@@ -5,6 +5,8 @@ Wordpress development using docker and github
 
 Clone the repository and run the following commands
 ```sh
+# make data directory
+mkdir data
 # run the wordpress stack in background
 docker compose up -d
 ```
