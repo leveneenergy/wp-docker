@@ -10,6 +10,16 @@ data/*
 !data/.gitkeep 
 !data/update_db_siteurl_home.sh
 
+# core files
+src/*
+src/*.php
+*/wp-admin/*
+*/wp-includes/*
+!/wp-content/*
+!src/wp-config.php
+*/.htaccess
+
+# themes
 */themes/twenty*
 */themes/index.php
 
@@ -30,9 +40,3 @@ data/*
 !*/plugins/*-simple-cookie-banner
 !*/plugins/*-simple-GTM-plugin
 
-src/*
-src/wp-admin/*
-src/wp-includes/*
-src/wp-*.php
-!src/wp-config.php
-*/.htaccess
