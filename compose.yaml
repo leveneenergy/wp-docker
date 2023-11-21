@@ -28,7 +28,9 @@ services:
       dockerfile: Dockerfile
     volumes:
       - wordpress:/var/www/html
-       - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ${THEMES_DIR:-./src/themes}:/var/www/html/wp-content/themes
+      - ${PLUGINS_DIR:-./src/plugins}:/var/www/html/wp-content/plugins
     ports:
       - 80:80
     depends_on:
@@ -58,8 +60,3 @@ services:
 volumes:
   database:
   wordpress:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./src
